@@ -1,0 +1,242 @@
+---
+import Base from "../layouts/Base.astro";
+import { team } from "../data/team";
+
+// Group members for the grouped layout; the grid layout flattens these via CSS.
+const groupOrder = [
+  "Principal Investigator",
+  "Postdoctoral Researcher",
+  "PhD Students",
+  "Undergraduate Researchers",
+  "Collaborators",
+];
+const groups = groupOrder
+  .map((label) => ({ label, members: team.filter((m) => m.group === label) }))
+  .filter((g) => g.members.length > 0);
+---
+
+<Base title="Lasisi Lab">
+  <div class="bg-branch" aria-hidden="true"></div>
+
+  <!-- ===================== Header ===================== -->
+  <header class="hd">
+    <a class="hd__brand" href="#top" aria-label="Lasisi Lab — home">
+      <img class="hd__mark" src="/assets/mark-teal.png" alt="" />
+      <span class="hd__word">Lasisi Lab</span>
+    </a>
+    <nav class="hd__nav" aria-label="Primary">
+      <a class="hd__link" href="#research">Research</a>
+      <a class="hd__link" href="#team">Team</a>
+      <a class="hd__link" href="#publications">Publications</a>
+      <a class="hd__link" href="#news">News</a>
+      <a class="hd__link hd__link--keep" href="#contact">Contact</a>
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Cycle theme: system, light, dark"
+        title="Cycle theme"
+        onclick="cycleTheme()"
+      >
+        <svg class="icon-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </nav>
+  </header>
+
+  <a id="top"></a>
+
+  <!-- ===================== Hero ===================== -->
+  <section class="hero">
+    <div class="hero__branch" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="eyebrow"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> University of Michigan</p>
+      <h1 class="hero__title">Lasisi Lab</h1>
+      <p class="hero__lead">
+        The Lasisi Lab studies the evolution and genetic basis of human
+        phenotypic variation, with a focus on hair and pigmentation.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--accent" href="#team">Meet the team</a>
+        <a class="btn btn--ghost-light" href="#research">Our research</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- ===================== Research ===================== -->
+    <section class="section" id="research">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="eyebrow">What we study</p>
+          <h2 class="section__title">
+            Human variation: its evolution, genetic architecture, and
+            implications.
+          </h2>
+          <p class="section__lead">
+            We study human variation through the lens of hair morphology and
+            skin pigmentation, combining quantitative phenotyping with population
+            and evolutionary genetics. Comparative evolutionary work in
+            non-human primates extends this to the phylogenetics of pigmentation
+            across lineages. We also investigate hair as a biological record,
+            including how structural variation affects biomarker measurements
+            like cortisol. And our work includes the ethical, legal, and social
+            implications of human variation science, such as forensic genetics.
+          </p>
+        </div>
+        <div class="focus">
+          <span class="focus__chip"><i class="fa-solid fa-dna" aria-hidden="true"></i> Hair morphology</span>
+          <span class="focus__chip"><i class="fa-solid fa-droplet" aria-hidden="true"></i> Skin pigmentation</span>
+          <span class="focus__chip"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> Evolutionary genetics</span>
+          <span class="focus__chip"><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Quantitative phenotyping</span>
+          <span class="focus__chip"><i class="fa-solid fa-fingerprint" aria-hidden="true"></i> Forensic genetics</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ===================== Team ===================== -->
+    <section class="section team" id="team">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="eyebrow">People</p>
+          <h2 class="section__title">The lab</h2>
+        </div>
+
+        <div class="team__groups">
+          {groups.map((g) => (
+            <div class="team__group">
+              <p class="team__group-label">{g.label}</p>
+              <div class="people">
+                {g.members.map((m) => (
+                  <article class="person">
+                    <div class="person__photo">
+                      <img src={m.photo} alt={m.name} loading="lazy" />
+                    </div>
+                    <h3 class="person__name">{m.name}</h3>
+                    <p class="person__role">{m.role}</p>
+                    <span class="person__badge">{m.badge}</span>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ===================== Publications ===================== -->
+    <section class="section" id="publications">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="eyebrow">Selected work</p>
+          <h2 class="section__title">Publications</h2>
+        </div>
+        <div class="panel">
+          <div class="panel__branch" aria-hidden="true"></div>
+          <p class="panel__eyebrow">Coming soon</p>
+          <p class="panel__title">A curated list of the lab's publications will live here.</p>
+          <p class="panel__text">
+            In the meantime, you can find Dr.&nbsp;Lasisi's complete and
+            up-to-date list of papers on Google Scholar and ORCID.
+          </p>
+          <div class="panel__actions">
+            <a class="btn btn--accent" href="https://scholar.google.com/citations?hl=en&user=mRU9Fu4AAAAJ" target="_blank" rel="noopener"><i class="ai ai-google-scholar" aria-hidden="true"></i> Google Scholar</a>
+            <a class="btn btn--ghost" href="https://orcid.org/0000-0002-7546-6724" target="_blank" rel="noopener"><i class="ai ai-orcid" aria-hidden="true"></i> ORCID</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ===================== News ===================== -->
+    <section class="section" id="news">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="eyebrow">From the lab</p>
+          <h2 class="section__title">News &amp; updates</h2>
+        </div>
+        <div class="panel">
+          <div class="panel__branch" aria-hidden="true"></div>
+          <p class="panel__eyebrow">Placeholder</p>
+          <p class="panel__title">Lab news, talks, and milestones will be posted here.</p>
+          <p class="panel__text">
+            As the lab grows we'll share new papers, conference talks, fieldwork,
+            and student milestones. Check back soon, or follow along on Bluesky.
+          </p>
+          <div class="panel__actions">
+            <a class="btn btn--ghost" href="https://bsky.app/profile/tinalasisi.bsky.social" target="_blank" rel="noopener"><i class="fa-brands fa-bluesky" aria-hidden="true"></i> Follow on Bluesky</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ===================== Contact ===================== -->
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <div class="contact__grid">
+          <div>
+            <p class="eyebrow">Get in touch</p>
+            <h2 class="section__title">Contact</h2>
+            <p class="contact__lead">
+              For collaborations, media, or questions about the lab's research,
+              reach out using the details below.
+            </p>
+            <dl class="contact__list">
+              <div>
+                <dt>Institution</dt>
+                <dd>University of Michigan<br />Department of Anthropology &amp; Department of Ecology and Evolutionary Biology<br />Ann Arbor, Michigan</dd>
+              </div>
+              <div>
+                <dt>Email</dt>
+                <dd>tlasisi&nbsp;[at]&nbsp;umich&nbsp;[dot]&nbsp;edu</dd>
+              </div>
+              <div>
+                <dt>Find us online</dt>
+                <dd>
+                  <div class="contact__socials">
+                    <a href="https://scholar.google.com/citations?hl=en&user=mRU9Fu4AAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="ai ai-google-scholar" aria-hidden="true"></i></a>
+                    <a href="https://orcid.org/0000-0002-7546-6724" target="_blank" rel="noopener" aria-label="ORCID"><i class="ai ai-orcid" aria-hidden="true"></i></a>
+                    <a href="https://github.com/lasisilab" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+                    <a href="https://bsky.app/profile/tinalasisi.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky"><i class="fa-brands fa-bluesky" aria-hidden="true"></i></a>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <aside class="contact__card">
+            <div class="contact__card-branch" aria-hidden="true"></div>
+            <p class="eyebrow">Prospective students</p>
+            <h3>Interested in joining the lab?</h3>
+            <p>
+              We welcome curious students and researchers interested in human
+              variation, hair, and pigmentation. Get in touch to learn about
+              current openings.
+            </p>
+            <a class="btn btn--accent" href="mailto:tlasisi@umich.edu">Email the lab</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== Footer ===================== -->
+  <footer class="ft">
+    <img class="ft__mark" src="/assets/mark-teal.png" alt="Lasisi Lab" />
+    <nav class="ft__nav" aria-label="Footer">
+      <a href="#research">Research</a>
+      <a href="#team">Team</a>
+      <a href="#publications">Publications</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="ft__copy">© 2026 Lasisi Lab · University of Michigan</p>
+  </footer>
+</Base>

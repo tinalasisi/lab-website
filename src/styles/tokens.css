@@ -1,0 +1,406 @@
+/* Webfonts — must precede all other statements (CSS @import rule). */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Mulish:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Source+Serif+Pro:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap");
+
+/* =============================================================
+   Lasisi Lab — Design Tokens
+   Color (teal × pink/purple) + Typography
+   =============================================================
+   Source brand was teal × coral (#05686D / #F38C79). Per the
+   client's request, the warm secondary has been migrated from
+   coral to a teal-friendly pink/magenta and a quieter purple
+   that picks up the same warmth without competing with the
+   teal primary. Coral tokens are kept as `--legacy-*` for
+   any archival surfaces.
+   ============================================================= */
+
+:root {
+  /* ---------- Brand: Teal (primary spine) ----------
+     Pulled directly from the original brand poster. */
+  --teal-900: #023943;   /* deepest — true teal, not navy */
+  --teal-800: #034D54;   /* between hero and brand — softer dark headline */
+  --teal-700: #05686D;   /* FUNCTIONAL SECONDARY — links, eyebrows, secondary buttons, hover state for teal-900 */
+  --teal-500: #2D8489;   /* mid — turquoise-teal, not blue */
+  --teal-450: #3E9D9F;   /* wordmark on light surfaces (one-off, paired with airy painted mark) */
+  --teal-400: #4FB5B5;   /* light — turquoise              */
+  --teal-300: #76C3C1;   /* mid-light — between 200 and 400 */
+  --teal-200: #A4D2CD;   /* soft tint — turquoise          */
+  --teal-125: #C0E0DF;   /* wordmark on hero / dark / teal-900 surfaces (one-off) */
+  --teal-100: #B7DCD9;   /* fill — light turquoise         */
+  --teal-50:  #DCEDEB;
+
+  /* ---------- Brand: Pink/Purple (cool accent) ----------
+     Pulled toward purple so it reads as a tech-style
+     purple-pink gradient anchor — pinker than violet,
+     cooler than fuchsia, never warm/coral.            */
+  /* ---------- Brand: Pink (deep magenta accent, ~325°) ----------
+     Step ladder normalised to match teal+indigo lightness rungs.   */
+  --pink-900: #321B3D;   /* dark-mode hero / pink-on-pink type — cool aubergine */
+  --pink-800: #6E1A56;   /* pressed/hover state for pink-700 on light */
+  --pink-700: #8C2370;   /* anchor pair partner to teal-700     */
+  --pink-600: #A82F88;   /* SECONDARY — the accent / CTA       */
+  --pink-400: #C26AA0;
+  --pink-300: #DA94BC;   /* link / accent on dark surfaces     */
+  --pink-200: #ECC2D8;
+  --pink-100: #F7E1ED;
+
+  /* ---------- Brand: Indigo (cool tertiary, ~245°) ----------
+     Sits on the gradient line between teal (183°) and pink (325°).
+     Re-tuned so 700 matches the tonal weight of teal-700 + pink-700. */
+  --indigo-800: #221F58;
+  --indigo-700: #3A2E78; /* TERTIARY — hue ~254°, equidistant bridge between teal (183°) and pink (325°) */
+  --indigo-500: #6B5BB8;
+  --indigo-400: #9387CB;   /* mid-light — mid between 300 and 500 */
+  --indigo-300: #BBB4DD;
+  --indigo-100: #E2DDEE;
+  --indigo-50:  #F1EDF8;
+
+  /* ---------- Neutrals ---------- */
+  --ink-900: #1F232C;
+  --ink-700: #3F4251;    /* body type colour from poster      */
+  --ink-500: #6B6F7E;
+  --ink-300: #B7BAC4;
+  --ink-200: #D9DBE2;
+  --ink-100: #ECEDF1;
+  --paper:   #FFFFFF;
+  --paper-2: #FAFBFC;
+  --paper-3: #F2F2F2;    /* poster's #F2F2F2 surface          */
+
+  /* ---------- Legacy (archival) ---------- */
+  --legacy-coral:      #F38C79;
+  --legacy-coral-soft: #FBD9D1;
+
+  /* ---------- Semantic surfaces ----------
+     LIGHT MODE — mirrors the dark system structurally:
+       --bg            indigo kiss (radial whisper, top-left, on paper)
+       --bg-hero       teal-900 → indigo-700 (linear, deep splash)
+     Cards lift via --surface-card (alpha veil) so the kiss flows through.
+     There is no third surface — pink lives in foreground (titles, CTAs,
+     link-hover, eyebrow accents), never in ground.                       */
+  --bg:           radial-gradient(ellipse 90% 110% at 0% 0%, var(--indigo-100) 0%, var(--indigo-50) 35%, var(--paper) 75%);
+  --bg-solid:     var(--paper);           /* flat fallback                 */
+  --bg-muted:     var(--paper-3);         /* sunken well — solid           */
+  --bg-soft:      var(--teal-50);         /* well — brand-tinted           */
+  --bg-hero:      linear-gradient(135deg, var(--teal-900) 0%, var(--indigo-700) 100%); /* teal-900 → indigo-700 */
+  --bg-inverse:   var(--ink-900);
+
+  /* Card elevation — ALPHA VEIL, not a solid fill.
+     Cards lighten the patch of kiss they sit on by a constant amount, so the
+     elevation contract holds regardless of where they sit in the gradient.
+     Use with backdrop-filter: blur(...) for a glassy lift. */
+  --surface-card:        rgba(255, 255, 255, 0.82);
+  --surface-card-border: rgba(15, 23, 42, 0.08);
+  --surface-card-blur:   blur(10px);
+  --surface-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 28px rgba(15, 23, 42, 0.06);
+
+  --fg:           var(--ink-700);
+  --fg-strong:    var(--teal-900);
+  --fg-muted:     var(--ink-500);
+  --fg-on-dark:   #F0F4F9;
+
+  --brand:        var(--teal-900);   /* PRIMARY brand anchor — promoted from teal-700 */
+  --brand-hover:  var(--teal-700);   /* hover/secondary state */
+  --brand-soft:   var(--teal-100);
+
+  --accent:       var(--pink-700);
+  --accent-hover: var(--pink-800);
+  --accent-soft:  var(--pink-100);
+
+  --link:         var(--teal-700);
+  --link-hover:   var(--pink-600);
+
+  --border:       var(--ink-200);
+  --border-strong:var(--ink-300);
+  --border-on-dark: rgba(255,255,255,.14);
+  --divider:      var(--ink-100);
+  --focus-ring:   var(--indigo-500);
+
+  /* ---------- Status (derived) ---------- */
+  --success: #1F8A78;   /* cooler, slightly bluer green   */
+  --warning: #C98A14;
+  --danger:  #C2364E;   /* warm rose — contrasts purple accent */
+}
+
+/* =============================================================
+   DARK MODE — [data-theme="dark"]
+   ---------------------------------------------------------
+   Brand hues (teal/pink/indigo 700★) stay LOCKED. We only
+   re-bind the SEMANTIC layer: surfaces, neutrals, accent
+   pairings, and borders. Page becomes teal-900 (brand-present
+   dark, not generic black). Cards lift to indigo-800 (the
+   bridge as surface). Text uses fg-on-dark; the pink accent
+   shifts from 700 (light-mode pop) → 300 (dark-mode pop) so
+   contrast stays AAA.
+   ============================================================= */
+[data-theme="dark"] {
+  /* surfaces — the page IS the kiss. Cards lift via --surface-card (alpha
+     veil). --bg-hero matches LIGHT mode (teal-900 → indigo-700) so the hero
+     reads the same gesture across modes — uniformity over mirroring. */
+  --bg:           linear-gradient(135deg, #161A4A 0%, #0C0E26 45%, #08090C 80%);  /* J · indigo kiss — brighter origin so the indigo actually reads */
+  --bg-solid:     #08090C;                                           /* flat fallback when bg can't be gradient */
+  --bg-muted:     #14163A;                                           /* sunken well (rare — cards now use --surface-card) */
+  --bg-soft:      #1A1D44;                                           /* deeper well                                   */
+  --bg-hero:      linear-gradient(135deg, var(--teal-900) 0%, var(--indigo-700) 100%); /* matches light hero — uniform across modes */
+  --bg-inverse:   var(--paper);
+  --bg-inverse:   var(--paper);
+
+  /* Card elevation — alpha veil over the kiss. Lifts the card a constant
+     amount above whatever the kiss is doing underneath, so contrast holds
+     across the page. Pair with backdrop-filter for a glassy treatment. */
+  --surface-card:        rgba(255, 255, 255, 0.045);
+  --surface-card-border: rgba(255, 255, 255, 0.10);
+  --surface-card-blur:   blur(10px);
+  --surface-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 14px 36px rgba(0, 0, 0, 0.45);
+
+  /* foreground — brand-typed not pure white.
+     Titles use pure paper white (not pink-200) — pink against the
+     indigo kiss is too soft to read at heading scale. Pink stays in
+     accent roles (link-hover, eyebrows, wordmark). */
+  --fg:           #EAE6E0;                    /* body text — paper-tinted off-white */
+  --fg-strong:    #FFFFFF;                    /* headlines — pure paper on dark, ~17:1 on the kiss */
+  --fg-muted:     var(--teal-200);            /* metadata, captions — brand-typed */
+
+  /* brand on dark — teal-400 is the bright pop, teal-700 the anchor */
+  --brand:        var(--teal-400);            /* link/accent text on dark — bright turquoise ~9:1 */
+  --brand-hover:  var(--teal-200);
+  --brand-soft:   rgba(79,181,181,.18);       /* tinted fills                */
+
+  /* accent flips 700 → 300 (the dark-surface pop) */
+  --accent:       var(--pink-300);
+  --accent-hover: var(--pink-200);
+  --accent-soft:  rgba(218,148,188,.18);
+
+  /* link wires */
+  --link:         var(--teal-400);
+  --link-hover:   var(--pink-300);
+
+  /* borders & dividers */
+  --border:       rgba(255,255,255,.14);
+  --border-strong:rgba(255,255,255,.22);
+  --divider:      rgba(255,255,255,.08);
+  --focus-ring:   var(--teal-400);            /* bright turquoise across all dark surfaces */
+
+  /* status — slightly brighter for dark contrast */
+  --success: #45B89C;
+  --warning: #E5AB3D;
+  --danger:  #E25C72;
+}
+
+/* =============================================================
+   AUTO DARK MODE — respects OS preference unless data-theme="light"
+   ============================================================= */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: linear-gradient(135deg, #161A4A 0%, #0C0E26 45%, #08090C 80%); --bg-solid: #08090C;
+    --bg-muted: #14163A; --bg-soft: #1A1D44;
+    --bg-hero: linear-gradient(135deg, var(--teal-900) 0%, var(--indigo-700) 100%);
+    --bg-inverse: var(--paper);
+    --surface-card: rgba(255,255,255,0.045); --surface-card-border: rgba(255,255,255,0.10); --surface-card-blur: blur(10px);
+    --fg: #EAE6E0; --fg-strong: #FFFFFF; --fg-muted: var(--teal-200);
+    --brand: var(--teal-400); --brand-hover: var(--teal-200); --brand-soft: rgba(79,181,181,.18);
+    --accent: var(--pink-300); --accent-hover: var(--pink-200); --accent-soft: rgba(218,148,188,.18);
+    --link: var(--teal-400); --link-hover: var(--pink-300);
+    --border: rgba(255,255,255,.14); --border-strong: rgba(255,255,255,.22); --divider: rgba(255,255,255,.08);
+    --focus-ring: var(--teal-400);
+    --success: #45B89C; --warning: #E5AB3D; --danger: #E25C72;
+  }
+}
+
+/* =============================================================
+   FORCED COLORS — Windows High Contrast safety
+   ============================================================= */
+@media (forced-colors: active) {
+  :root, [data-theme="dark"], [data-theme="light"] {
+    --border: CanvasText; --border-strong: CanvasText; --focus-ring: Highlight;
+  }
+}
+
+:root {
+
+  /* =========================================================
+     TYPOGRAPHY
+     ---------------------------------------------------------
+     Four-lane system, all SIL OFL (free, embeddable):
+       wordmark : Raleway 500     — logo / brand mark only
+       display  : Mulish 600/700  — headings, post titles, hero
+       ui       : Plus Jakarta    — buttons, eyebrows, chips, nav
+       body     : Open Sans 400/5 — long-form prose
+       mono     : Source Code Pro — code, tokens, captions
+     Source Serif/Sans Pro kept as `--font-doc-*` for academic
+     long-form surfaces (Hugo-academic compat).
+     ========================================================= */
+  --font-wordmark: "Raleway", "Helvetica Neue", Arial, sans-serif;
+  --font-display:  "Mulish", "Helvetica Neue", Arial, sans-serif;
+  --font-ui:       "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body:     "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-doc-serif:"Source Serif Pro", "Iowan Old Style", Georgia, serif;
+  --font-doc-sans: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:     "Source Code Pro", "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Type scale — modular, ratio ≈ 1.25 */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   20px;
+  --fs-xl:   24px;
+  --fs-2xl:  30px;
+  --fs-3xl:  38px;
+  --fs-4xl:  48px;
+  --fs-5xl:  64px;
+  --fs-display: 88px;
+
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-display: 0.12em;   /* Raleway 400 wordmark — slightly looser at lighter weight */
+  --ls-h1:      0.06em;
+  --ls-h2:      0.04em;
+  --ls-eyebrow: 0.22em;
+  --ls-body:    0;
+
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* =========================================================
+     SPACING / RADII / SHADOW
+     ========================================================= */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(31,35,44,0.06), 0 1px 1px rgba(31,35,44,0.04);
+  --shadow-md: 0 6px 16px rgba(31,35,44,0.08), 0 2px 4px rgba(31,35,44,0.05);
+  --shadow-lg: 0 18px 40px rgba(31,35,44,0.12), 0 4px 10px rgba(31,35,44,0.06);
+  --shadow-brand: 0 12px 28px rgba(5,104,109,0.18);
+
+  --duration-fast:    120ms;
+  --duration-base:    200ms;
+  --duration-slow:    320ms;
+  --ease-standard:    cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-emphasized:  cubic-bezier(0.2, 0.0, 0.0, 1.2);
+}
+
+/* =============================================================
+   Webfont imports
+   ----------------------------------------------------------
+   Currently CDN-hosted (Google Fonts). To self-host, drop
+   .woff2 files into /fonts and replace this @import with
+   @font-face rules pointing at fonts/<family>-<weight>.woff2.
+   (The actual @import lives at the top of this file — CSS requires
+   @import to precede all other statements.)
+   ============================================================= */
+
+/* =============================================================
+   Semantic typography classes
+   Use these directly OR copy the rules onto your h1/p/etc.
+   ============================================================= */
+html { color: var(--fg); background: var(--bg); font-family: var(--font-body); font-size: var(--fs-base); line-height: var(--lh-normal); -webkit-font-smoothing: antialiased; }
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.wordmark {
+  font-family: var(--font-wordmark);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-display);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-display);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.h1, h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-4xl);
+  letter-spacing: var(--ls-h1);
+  line-height: var(--lh-tight);
+  color: var(--fg-strong);
+}
+
+.h2, h2 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-3xl);
+  letter-spacing: var(--ls-h2);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+}
+
+.h3, h3 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+}
+
+.h4, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+}
+
+.p, p {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+}
+
+.small, small { font-size: var(--fs-sm); color: var(--fg-muted); }
+.caption { font-size: var(--fs-xs); color: var(--fg-muted); letter-spacing: 0.02em; }
+
+.code, code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--paper-3);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  color: var(--teal-900);
+}
+
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid transparent; transition: color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard); }
+a:hover { color: var(--link-hover); border-bottom-color: currentColor; }

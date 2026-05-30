@@ -1,0 +1,83 @@
+---
+// Base layout — <html> shell, font + icon CDN links, theme bootstrap.
+// Pages render their content into <slot />. Mirrors the personal-website
+// Base.astro pattern (shared design system + pre-paint theme script).
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Lasisi Lab",
+  description = "The Lasisi Lab studies the evolution and genetic basis of human phenotypic variation, with a focus on hair and pigmentation. University of Michigan.",
+} = Astro.props;
+
+import "../styles/tokens.css";
+import "../styles/lab.css";
+---
+
+<!DOCTYPE html>
+<html lang="en" data-team-layout="grid">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <script is:inline>
+      /* Theme bootstrap — runs before paint to avoid FOUC.
+         Three states: "system" (follow OS), "light", "dark".
+         data-theme-pref drives the toggle icon; data-theme drives the CSS.
+         Matches the personal-website pattern (key: ll-theme). */
+      (function () {
+        const VALID = ["system", "light", "dark"];
+        const urlParam = new URLSearchParams(location.search).get("theme");
+        let pref = VALID.includes(urlParam)
+          ? urlParam
+          : localStorage.getItem("ll-theme");
+        if (!VALID.includes(pref)) pref = "system";
+
+        const mql = window.matchMedia("(prefers-color-scheme: dark)");
+        const resolve = (p) =>
+          p === "system" ? (mql.matches ? "dark" : "light") : p;
+
+        const apply = (p) => {
+          document.documentElement.setAttribute("data-theme-pref", p);
+          document.documentElement.setAttribute("data-theme", resolve(p));
+          localStorage.setItem("ll-theme", p);
+        };
+        apply(pref);
+
+        mql.addEventListener("change", () => {
+          if (
+            document.documentElement.getAttribute("data-theme-pref") ===
+            "system"
+          ) {
+            document.documentElement.setAttribute(
+              "data-theme",
+              mql.matches ? "dark" : "light"
+            );
+          }
+        });
+
+        window.cycleTheme = function () {
+          const cur =
+            document.documentElement.getAttribute("data-theme-pref") ||
+            "system";
+          const order = ["system", "light", "dark"];
+          apply(order[(order.indexOf(cur) + 1) % order.length]);
+        };
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
